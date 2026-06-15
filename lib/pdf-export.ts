@@ -81,6 +81,62 @@ export async function exportToPdf(
   // Give the browser a tick to reflow / load fonts
   await new Promise((r) => setTimeout(r, 300));
 
+  // ── Phase 2.5 — Dynamic Page Breaking & Spacing ────────────────────────
+  const PAGE_HEIGHT_PX = Math.floor((CONTENT_H_MM / CONTENT_W_MM) * RENDER_WIDTH_PX); // ~1008 px
+
+  const getRelativeOffset = (el: HTMLElement) => {
+    const rect = el.getBoundingClientRect();
+    const parentRect = container.getBoundingClientRect();
+    return {
+      top: rect.top - parentRect.top,
+      bottom: rect.bottom - parentRect.top,
+      height: rect.height
+    };
+  };
+
+  const children = Array.from(clone.children) as HTMLElement[];
+  for (let i = 0; i < children.length; i++) {
+    const child = children[i];
+    
+    if (child.classList.contains("page-break") || child.tagName === "HR") {
+      const offset = getRelativeOffset(child);
+      const remainingSpace = PAGE_HEIGHT_PX - (offset.top % PAGE_HEIGHT_PX);
+      if (remainingSpace < PAGE_HEIGHT_PX - 10) {
+        const spacer = document.createElement("div");
+        spacer.style.height = `${remainingSpace}px`;
+        child.parentNode?.insertBefore(spacer, child);
+      }
+      continue;
+    }
+
+    const offset = getRelativeOffset(child);
+    const pageNumStart = Math.floor(offset.top / PAGE_HEIGHT_PX);
+    const pageNumEnd = Math.floor(offset.bottom / PAGE_HEIGHT_PX);
+
+    if (pageNumStart !== pageNumEnd) {
+      const shouldAvoidBreak = 
+        child.tagName.startsWith("H") || 
+        child.tagName === "TABLE" || 
+        child.tagName === "PRE" || 
+        child.tagName === "BLOCKQUOTE" || 
+        child.classList.contains("callout-block") || 
+        child.tagName === "UL" || 
+        child.tagName === "OL" ||
+        child.classList.contains("mermaid-wrapper");
+
+      const isShortParagraph = child.tagName === "P" && offset.height < 120;
+
+      if (shouldAvoidBreak || isShortParagraph) {
+        const remainingSpace = PAGE_HEIGHT_PX - (offset.top % PAGE_HEIGHT_PX);
+        if (remainingSpace < PAGE_HEIGHT_PX) {
+          const spacer = document.createElement("div");
+          spacer.style.height = `${remainingSpace}px`;
+          child.parentNode?.insertBefore(spacer, child);
+        }
+      }
+    }
+  }
+
   try {
     // ── Phase 3 — Render to canvas ─────────────────────────────────────
     const canvas = await html2canvas(container, {

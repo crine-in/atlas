@@ -233,6 +233,12 @@
   padding-bottom: 0.4rem;
   border-radius: 0 4px 4px 0;
 }
+.callout-block {
+  margin: 1rem 0;
+}
+.callout-content p:last-child {
+  margin-bottom: 0;
+}
 .prose-atlas table {
   width: 100%;
   border-collapse: collapse;
@@ -351,6 +357,7 @@
   .prose-atlas table, 
   .prose-atlas pre, 
   .prose-atlas blockquote, 
+  .callout-block,
   .mermaid-wrapper {
     page-break-inside: avoid;
   }
