@@ -127,3 +127,294 @@
     @apply font-sans;
     }
 }
+
+/* Custom imports */
+@import "katex/dist/katex.min.css";
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.25);
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* Split Pane Divider */
+.split-pane-divider {
+  position: relative;
+  width: 6px;
+  background-color: var(--border);
+  cursor: col-resize;
+  transition: background-color 0.2s;
+  z-index: 10;
+}
+.split-pane-divider:hover,
+.split-pane-divider.active {
+  background-color: oklch(0.556 0 0);
+}
+
+/* Markdown Typography */
+.prose-atlas {
+  font-size: 0.95rem;
+  line-height: 1.625;
+  color: var(--foreground);
+}
+.prose-atlas h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-top: 1.8rem;
+  margin-bottom: 0.8rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.3rem;
+}
+.prose-atlas h2 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.6rem;
+  border-bottom: 1px solid var(--border)/50;
+  padding-bottom: 0.2rem;
+}
+.prose-atlas h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-top: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+.prose-atlas h4 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-top: 1rem;
+  margin-bottom: 0.4rem;
+}
+.prose-atlas p {
+  margin-top: 0;
+  margin-bottom: 0.8rem;
+}
+.prose-atlas strong {
+  font-weight: 600;
+}
+.prose-atlas ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin-bottom: 0.8rem;
+}
+.prose-atlas ol {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  margin-bottom: 0.8rem;
+}
+.prose-atlas li {
+  margin-bottom: 0.25rem;
+}
+.prose-atlas blockquote {
+  border-left: 4px solid oklch(0.488 0.243 264.376);
+  padding-left: 1rem;
+  color: var(--muted-foreground);
+  font-style: italic;
+  margin: 1rem 0;
+  background-color: var(--muted)/30;
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
+  border-radius: 0 4px 4px 0;
+}
+.prose-atlas table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.2rem;
+}
+.prose-atlas th {
+  background-color: var(--muted);
+  font-weight: 600;
+  border: 1px solid var(--border);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+.prose-atlas td {
+  border: 1px solid var(--border);
+  padding: 0.5rem 0.75rem;
+}
+.prose-atlas tr:nth-child(even) {
+  background-color: var(--muted)/20;
+}
+.prose-atlas hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: 1.5rem 0;
+}
+
+/* Checklists & Tasks */
+.prose-atlas ul.contains-task-list {
+  list-style-type: none;
+  padding-left: 0.5rem;
+}
+.prose-atlas li.task-list-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 0.4rem;
+}
+.prose-atlas li.task-list-item input[type="checkbox"] {
+  margin-top: 0.25rem;
+  width: 1rem;
+  height: 1rem;
+  accent-color: oklch(0.488 0.243 264.376);
+  cursor: pointer;
+}
+
+/* Custom Checkbox visual enhancements */
+.task-list-item-checkbox {
+  flex-shrink: 0;
+  margin-top: 0.25rem;
+}
+
+/* Code Syntax & Styling */
+.prose-atlas code {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  padding: 0.15rem 0.3rem;
+  border-radius: 4px;
+  background-color: var(--muted);
+}
+.prose-atlas pre code {
+  padding: 0;
+  background-color: transparent;
+  font-size: 0.9rem;
+}
+.code-block-wrapper {
+  position: relative;
+  margin-bottom: 1.2rem;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.code-block-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.4rem 0.8rem;
+  background-color: var(--muted);
+  border-bottom: 1px solid var(--border);
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  color: var(--muted-foreground);
+}
+.code-block-content {
+  overflow-x: auto;
+  padding: 0.8rem;
+  background-color: var(--card);
+}
+
+/* Printing media styles */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-full-width {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+    height: auto !important;
+  }
+  .prose-atlas {
+    font-size: 11pt !important;
+  }
+  .prose-atlas h1, 
+  .prose-atlas h2, 
+  .prose-atlas h3, 
+  .prose-atlas h4 {
+    page-break-after: avoid;
+  }
+  .prose-atlas table, 
+  .prose-atlas pre, 
+  .prose-atlas blockquote, 
+  .mermaid-wrapper {
+    page-break-inside: avoid;
+  }
+  @page {
+    margin: 2cm;
+  }
+}
+
+/* Presentation Slide Views */
+.slide-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100vw;
+  padding: 4rem;
+  transition: all 0.3s ease-in-out;
+}
+.slide-card {
+  width: 100%;
+  max-width: 900px;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 3rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--border);
+  background-color: var(--card);
+}
+.slide-content-prose {
+  font-size: 1.35rem;
+  line-height: 1.75;
+}
+.slide-content-prose h1 {
+  font-size: 2.8rem;
+  margin-bottom: 1.5rem;
+}
+.slide-content-prose h2 {
+  font-size: 2.2rem;
+  margin-bottom: 1.2rem;
+}
+.slide-content-prose h3 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+.slide-content-prose p, 
+.slide-content-prose ul, 
+.slide-content-prose ol {
+  margin-bottom: 1.2rem;
+}
+.slide-content-prose code {
+  font-size: 1.1rem;
+}
+
+/* Katex specific alignment tweaks */
+.katex-display {
+  margin: 1.2em 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.4em 0;
+}
+.katex {
+  font-size: 1.1em;
+}
