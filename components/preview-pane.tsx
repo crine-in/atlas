@@ -173,7 +173,7 @@ export default function PreviewPane({ markdown, isDark, previewRef, onScroll }: 
     <div
       ref={previewRef}
       onScroll={onScroll}
-      className="h-full w-full overflow-y-auto bg-background p-6 md:p-8 border-none outline-none"
+      className="h-full w-full overflow-y-auto bg-background p-6 md:p-8 border-none outline-none print-full-width"
     >
       <div className="prose-atlas max-w-none print-full-width">
         <ReactMarkdown

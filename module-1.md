@@ -13,24 +13,20 @@ The Schrödinger wave equation is the fundamental equation of quantum mechanics.
 $$\nabla^2\Psi + \frac{8\pi^2m}{h^2}(E - V)\Psi = 0$$
 
 #### Variable Glossary
-| Symbol | Term | Description |
-| :---: | :--- | :--- |
-| **$\Psi$** | Psi | The wave function, representing the amplitude of the electron wave. |
-| **$\nabla^2$** | Del squared | The Laplacian operator: $\left(\frac{\partial^2}{\partial x^2} + \frac{\partial^2}{\partial y^2} + \frac{\partial^2}{\partial z^2}\right)$ |
-| **$m$** | Mass | Mass of the particle. |
-| **$h$** | Planck's constant | Universal physical constant. |
-| **$E$** | Total energy | Total energy of the particle. |
-| **$V$** | Potential energy | Potential energy of the particle. |
+*   **$\Psi$ (Psi):** The wave function, representing the amplitude of the electron wave.
+*   **$\nabla^2$ (Del squared):** The Laplacian operator: $\left(\frac{\partial^2}{\partial x^2} + \frac{\partial^2}{\partial y^2} + \frac{\partial^2}{\partial z^2}\right)$
+*   **$m$ (Mass):** Mass of the particle.
+*   **$h$ (Planck's constant):** Universal physical constant.
+*   **$E$ (Total energy):** Total energy of the particle.
+*   **$V$ (Potential energy):** Potential energy of the particle.
 
 ### Conditions for an Acceptable Wave Function ($\Psi$)
 For a wave function to physically make sense, it must satisfy the following four core criteria:
 
-| # | Condition | Explanation |
-| :-: | :--- | :--- |
-| **1** | **Single-valued** | It can only have one value at any given point in space. |
-| **2** | **Continuous** | There can be no sudden breaks in the wave. |
-| **3** | **Finite** | It cannot go to infinity. |
-| **4** | **Normalized** | The total probability of finding the particle somewhere in space must equal 1. |
+1.  **Single-valued:** It can only have one value at any given point in space. If it had multiple values, it would imply the particle has different probabilities of being at the exact same location at the same time, which is physically impossible.
+2.  **Continuous:** There can be no sudden breaks or jumps in the wave. The derivative of the wave function must also be continuous.
+3.  **Finite:** It cannot go to infinity anywhere. If it did, it would mean the particle has an infinite probability of being at that point.
+4.  **Normalized:** The total probability of finding the particle somewhere in space must equal 1. That is, $\int_{-\infty}^{\infty} |\Psi|^2 dV = 1$.
 
 ## 2. Application: Particle in a 1D Box
 This model imagines a particle (like an electron) trapped in a perfectly rigid, one-dimensional box of length $L$. Inside the box, the potential energy ($V$) is zero. Outside the box, the potential energy is infinite, meaning the particle cannot escape.
@@ -122,11 +118,14 @@ Molecular Orbital (MO) Theory provides a more accurate view of molecular bonding
 ### Linear Combination of Atomic Orbitals (LCAO)
 When two atomic wave functions ($\Psi_A$ and $\Psi_B$) combine, they form two molecular orbitals:
 
-| Property | Bonding Molecular Orbital (MO) | Antibonding Molecular Orbital (MO*) |
-| :--- | :--- | :--- |
-| **Formation** | Addition of wave functions ($\Psi_A + \Psi_B$) | Subtraction of wave functions ($\Psi_A - \Psi_B$) |
-| **Energy Level** | Lower energy | Higher energy (denoted with an asterisk *) |
-| **Stability** | Higher stability | Lower stability |
+*   **Bonding Molecular Orbital (BMO):**
+    *   **Formation:** Formed by the addition of atomic wave functions ($\Psi_{BMO} = \Psi_A + \Psi_B$).
+    *   **Energy Level:** Has lower energy than the parent atomic orbitals.
+    *   **Stability:** High stability; electron density accumulates between the nuclei, pulling them together.
+*   **Antibonding Molecular Orbital (ABMO, denoted with $*$):**
+    *   **Formation:** Formed by the subtraction of atomic wave functions ($\Psi_{ABMO} = \Psi_A - \Psi_B$).
+    *   **Energy Level:** Has higher energy than the parent atomic orbitals.
+    *   **Stability:** Low stability; electron density between the nuclei is zero (creating a node), leading to mutual repulsion.
 
 ### Bond Order (BO)
 This value indicates the strength and type of bond (single, double, triple).
@@ -138,10 +137,12 @@ $$\text{Bond Order} = \frac{1}{2} (N_b - N_a)$$
 > **Key Relationship:** Higher Bond Order = Higher Bond Dissociation Energy = Shorter Bond Length. If BO = 0, the molecule does not exist.
 
 ### Magnetic Properties
-| Property | Paramagnetic | Diamagnetic |
-| :--- | :--- | :--- |
-| **Electron State** | One or more **unpaired** electrons | All electrons are **paired** |
-| **Behavior** | Attracted to a magnetic field | Weakly repelled by a magnetic field |
+*   **Paramagnetic Species:**
+    *   **Electron State:** Contain one or more **unpaired** electrons.
+    *   **Magnetic Behavior:** Attracted to an external magnetic field.
+*   **Diamagnetic Species:**
+    *   **Electron State:** All electrons are completely **paired** (no unpaired spins).
+    *   **Magnetic Behavior:** Weakly repelled by an external magnetic field.
 
 ### Previous Year Questions & Solutions (PYQs)
 
@@ -218,18 +219,14 @@ Carbon Monoxide is a heteronuclear diatomic molecule with 14 total electrons (6 
 **Solution:** 
 
 ##### Group (i) Analysis
-| Species | Electrons | Calculation | Bond Order | Result |
-| :---: | :---: | :---: | :---: | :--- |
-| $\text{H}_2$ | 2 | $(2 - 0)/2$ | **1.0** | **Strongest Bond** (highest BO) |
-| $\text{H}_2^+$ | 1 | $(1 - 0)/2$ | **0.5** | |
-| $\text{H}_2^-$ | 3 | $(2 - 1)/2$ | **0.5** | |
+*   **$\text{H}_2$:** Has 2 electrons. Bond Order = $\frac{2 - 0}{2} = 1.0$ (**Strongest Bond** due to highest bond order).
+*   **$\text{H}_2^+$:** Has 1 electron. Bond Order = $\frac{1 - 0}{2} = 0.5$.
+*   **$\text{H}_2^-$:** Has 3 electrons. Bond Order = $\frac{2 - 1}{2} = 0.5$.
 
 ##### Group (ii) Analysis
-| Species | Valence Electrons | Bond Order | Result / Notes |
-| :---: | :---: | :---: | :--- |
-| $\text{O}_2$ | 12 | **2.0** | |
-| $\text{O}_2^{2+}$ | 10 | **3.0** | **Strongest Bond** *(isoelectronic with $\text{N}_2$)* |
-| $\text{O}_2^{2-}$ | 14 | **1.0** | *(isoelectronic with $\text{F}_2$)* |
+*   **$\text{O}_2$:** Has 12 valence electrons. Bond Order = $2.0$.
+*   **$\text{O}_2^{2+}$:** Has 10 valence electrons. Bond Order = $3.0$ (**Strongest Bond**, isoelectronic with $\text{N}_2$).
+*   **$\text{O}_2^{2-}$:** Has 14 valence electrons. Bond Order = $1.0$ (isoelectronic with $\text{F}_2$).
 ---
 # Chapter 3: $\pi$-Molecular Orbitals & Aromaticity
 
@@ -242,12 +239,10 @@ When molecules have alternating single and double bonds (like butadiene or benze
 ## 2. Core Concepts: Rules of Aromaticity (Hückel's Rule)
 Aromatic compounds are incredibly stable due to their delocalized $\pi$ electron rings. To determine the category of a ring compound, we evaluate it against Hückel's criteria:
 
-### Aromaticity Classification Matrix
-| Classification | Cyclic | Planar | Conjugation | $\pi$ Electron Count | Relative Stability |
-| :--- | :---: | :---: | :---: | :---: | :--- |
-| **Aromatic** | Yes | Yes | Complete | **$4n + 2$** (2, 6, 10, 14...) | **Exceptionally High** |
-| **Anti-aromatic** | Yes | Yes | Complete | **$4n$** (4, 8, 12...) | **Highly Unstable** (reactive) |
-| **Non-aromatic** | Fails one or more of the cyclic, planar, or conjugation rules | Any | **Standard** (unaffected by ring) |
+### Aromaticity Classification Guidelines
+*   **Aromatic:** Must be **Cyclic**, **Planar**, **Fully Conjugated**, and have **$4n + 2$** $\pi$-electrons (2, 6, 10, 14...). This leads to **exceptionally high** stability.
+*   **Anti-aromatic:** Must be **Cyclic**, **Planar**, **Fully Conjugated**, but has **$4n$** $\pi$-electrons (4, 8, 12...). This leads to **extreme instability** (highly reactive).
+*   **Non-aromatic:** Fails *one or more* of the fundamental rules (either not cyclic, not planar, or has disrupted conjugation, e.g. contains an $sp^3$ hybridized carbon). Its stability is **standard/normal** (unaffected by ring dynamics).
 
 *   **Anti-aromatic:** A molecule is anti-aromatic if it is cyclic, planar, and conjugated (meets rules 1-3) but has **$4n$ $\pi$ electrons** (e.g., 4, 8, 12). These compounds are highly unstable.
 *   **Non-aromatic:** A molecule is non-aromatic if it fails any of the first three criteria (e.g., it is not a closed ring, it is not flat, or it has an $sp^3$ carbon disrupting the conjugation).
@@ -288,10 +283,14 @@ Benzene has 6 $\pi$ electrons. Following Hund's rule and the Pauli exclusion pri
 
 ##### Part B: Predicting Aromaticity
 
-| Compound | Cyclic / Planar | Conjugation | $\pi$ Electrons | Classification | Detailed Reasoning |
-| :--- | :---: | :---: | :---: | :---: | :--- |
-| **(i) Furan** | Yes / Yes | Complete | **6** | **Aromatic** | Possesses 4 $\pi$ electrons from double bonds + 2 from one of oxygen's lone pairs (which occupies a parallel $p$-orbital). Fits $4n+2$ ($n=1$). |
-| **(ii) Cyclopentadienyl cation** | Yes / Yes | Complete | **4** | **Anti-aromatic** | Possesses 4 $\pi$ electrons from two double bonds. The 5th carbon is $sp^2$ with an empty $p$-orbital, allowing conjugation but bringing total $\pi$ count to 4. Fits $4n$ ($n=1$). |
+*   **(i) Furan:**
+    *   *Structure:* Cyclic, planar, and fully conjugated.
+    *   *$\pi$-Electrons:* 6 $\pi$-electrons (4 from the two double bonds + 2 from one of oxygen's lone pairs occupying a parallel $p$-orbital).
+    *   *Classification:* **Aromatic** (fits $4n+2$ with $n=1$).
+*   **(ii) Cyclopentadienyl cation:**
+    *   *Structure:* Cyclic, planar, and conjugated (the 5th carbon is $sp^2$ hybridized with an empty $p$-orbital).
+    *   *$\pi$-Electrons:* 4 $\pi$-electrons (from the two double bonds).
+    *   *Classification:* **Anti-aromatic** (fits $4n$ with $n=1$).
 
 ---
 # Chapter 4: Crystal Field Theory (CFT)
@@ -302,18 +301,29 @@ Crystal Field Theory explains the bonding, colors, and magnetic properties of tr
 ### d-Orbital Splitting Behavior
 In a free metal ion, all five d-orbitals have the same energy (they are degenerate). When ligands approach the metal to form a complex, their negative electron clouds repel the electrons in the metal's d-orbitals, causing the orbitals to split into different energy levels.
 
-| Field Geometry | Ligand Approach | Stronger Repulsion (Higher Set) | Weaker Repulsion (Lower Set) | Splitting Parameter | Spin States |
-| :--- | :--- | :---: | :---: | :---: | :--- |
-| **Octahedral** | Along the axes ($x, y, z$) | $e_g$ ($d_{x^2-y^2}$, $d_{z^2}$) | $t_{2g}$ ($d_{xy}$, $d_{yz}$, $d_{zx}$) | $\Delta_o$ | High-spin or Low-spin |
-| **Tetrahedral** | Between the axes | $t_2$ ($d_{xy}$, $d_{yz}$, $d_{zx}$) | $e$ ($d_{x^2-y^2}$, $d_{z^2}$) | $\Delta_t \approx \frac{4}{9}\Delta_o$ | Almost exclusively High-spin |
+*   **Octahedral Fields ($\Delta_o$):**
+    *   **Ligand Approach:** Ligands approach directly along the Cartesian axes ($x, y, z$).
+    *   **Stronger Repulsion (Higher Set):** $e_g$ orbitals ($d_{x^2-y^2}$, $d_{z^2}$) point directly at ligands, raising their energy.
+    *   **Weaker Repulsion (Lower Set):** $t_{2g}$ orbitals ($d_{xy}$, $d_{yz}$, $d_{zx}$) point between axes, experiencing less repulsion.
+    *   **Spin States:** Can form **High-spin** or **Low-spin** complexes depending on ligand field strength.
+*   **Tetrahedral Fields ($\Delta_t$):**
+    *   **Ligand Approach:** Ligands approach between the axes.
+    *   **Stronger Repulsion (Higher Set):** $t_2$ orbitals ($d_{xy}$, $d_{yz}$, $d_{zx}$) point closer to the approaching ligands.
+    *   **Weaker Repulsion (Lower Set):** $e$ orbitals ($d_{x^2-y^2}$, $d_{z^2}$) experience less repulsion.
+    *   **Splitting Energy:** Small gap ($\Delta_t \approx \frac{4}{9}\Delta_o$).
+    *   **Spin States:** Form **almost exclusively High-spin** complexes due to the small energy gap.
 
 ### High-Spin vs. Low-Spin Complexes
-| Property | High-Spin Complexes | Low-Spin Complexes |
-| :--- | :--- | :--- |
-| **Ligand Strength** | Weak Field Ligands (e.g., $F^-$, $Cl^-$, $H_2O$) | Strong Field Ligands (e.g., $CN^-$, $CO$) |
-| **Splitting Gap vs. Pairing Energy** | Small splitting gap ($\Delta_o \lt P$) | Large splitting gap ($\Delta_o \gt P$) |
-| **Electron Placement** | Electrons fill upper set before pairing in lower set | Electrons pair up in lower set before moving to upper set |
-| **Unpaired Electrons** | Maximized | Minimized |
+*   **High-Spin Complexes:**
+    *   **Ligand Strength:** Formed with Weak Field Ligands (e.g., $\text{F}^-$, $\text{Cl}^-$, $\text{H}_2\text{O}$).
+    *   **Splitting Gap:** Small splitting energy compared to electron pairing energy ($\Delta_o \lt P$).
+    *   **Electron Placement:** Electrons fill the higher energy $e_g$ set singly before any pairing occurs in the lower $t_{2g}$ set.
+    *   **Unpaired Electrons:** Maximized (high magnetic moments).
+*   **Low-Spin Complexes:**
+    *   **Ligand Strength:** Formed with Strong Field Ligands (e.g., $\text{CN}^-$, $\text{CO}$).
+    *   **Splitting Gap:** Large splitting energy compared to electron pairing energy ($\Delta_o \gt P$).
+    *   **Electron Placement:** Electrons pair up completely in the lower $t_{2g}$ set before moving to the higher $e_g$ set.
+    *   **Unpaired Electrons:** Minimized (low magnetic moments).
 
 *   **Crystal Field Stabilization Energy (CFSE):** The energy gained by placing electrons in lower-energy orbitals compared to the unsplit state. For octahedral complexes, electrons in $t_{2g}$ lower the energy by $-0.4\Delta_o$, and electrons in $e_g$ raise it by $+0.6\Delta_o$.
 *   **Magnetic Moment ($\mu$):** Calculated using the "spin-only" formula:
@@ -352,10 +362,16 @@ For $d^1, d^2,$ and $d^3$, the electrons just fill the bottom three $t_{2g}$ orb
 Iron (Fe) has an atomic number of 26 ($3d^6 4s^2$). Water ($H_2O$) is a **weak field ligand**, meaning both will form **high-spin** complexes.
 
 ##### Complex Property Summary
-| Complex | Ion | Configuration | Hybridization | CFSE Calculation | CFSE Value |
-| :--- | :---: | :---: | :---: | :--- | :---: |
-| $\left[\text{Fe}(\text{H}_2\text{O})_6\right]^{2+}$ | $\text{Fe}^{2+}$ ($d^6$) | $t_{2g}^4 e_g^2$ | $sp^3d^2$ (outer d used) | $[(-0.4 \times 4) + (0.6 \times 2)]\Delta_o$ | **$-0.4\Delta_o$** |
-| $\left[\text{Fe}(\text{H}_2\text{O})_6\right]^{3+}$ | $\text{Fe}^{3+}$ ($d^5$) | $t_{2g}^3 e_g^2$ | $sp^3d^2$ (outer d used) | $[(-0.4 \times 3) + (0.6 \times 2)]\Delta_o$ | **$0\Delta_o$** |
+*   **$\left[\text{Fe}(\text{H}_2\text{O})_6\right]^{2+}$:**
+    *   *Metal Ion:* $\text{Fe}^{2+}$ ($d^6$ system).
+    *   *Spin State & Config:* High-spin (since $\text{H}_2\text{O}$ is weak-field), with electron distribution $t_{2g}^4 e_g^2$.
+    *   *Hybridization:* $sp^3d^2$ (outer-orbital complex).
+    *   *CFSE:* $[(-0.4 \times 4) + (0.6 \times 2)]\Delta_o = -0.4\Delta_o$.
+*   **$\left[\text{Fe}(\text{H}_2\text{O})_6\right]^{3+}$:**
+    *   *Metal Ion:* $\text{Fe}^{3+}$ ($d^5$ system).
+    *   *Spin State & Config:* High-spin, with electron distribution $t_{2g}^3 e_g^2$.
+    *   *Hybridization:* $sp^3d^2$ (outer-orbital complex).
+    *   *CFSE:* $[(-0.4 \times 3) + (0.6 \times 2)]\Delta_o = 0\Delta_o$.
 
 #### Q4. Calculate the CFSE and Magnetic moment of $K_3[FeF_6]$. *(2023 SEM2, 5 Marks)*
 
@@ -374,12 +390,20 @@ Iron (Fe) has an atomic number of 26 ($3d^6 4s^2$). Water ($H_2O$) is a **weak f
 **Solution:**
 
 ##### CFSE Calculations for $d^4$ and $d^7$ Octahedral Systems
-| System | Spin State | Configuration | Calculation | CFSE Value |
-| :---: | :--- | :---: | :--- | :---: |
-| **$d^4$** | High Spin | $t_{2g}^3 e_g^1$ | $[(-0.4 \times 3) + (0.6 \times 1)]\Delta_o$ | **$-0.6\Delta_o$** |
-| | Low Spin | $t_{2g}^4 e_g^0$ | $[(-0.4 \times 4) + (0.6 \times 0)]\Delta_o + 1P$ | **$-1.6\Delta_o + P$** |
-| **$d^7$** | High Spin | $t_{2g}^5 e_g^2$ | $[(-0.4 \times 5) + (0.6 \times 2)]\Delta_o$ | **$-0.8\Delta_o$** |
-| | Low Spin | $t_{2g}^6 e_g^1$ | $[(-0.4 \times 6) + (0.6 \times 1)]\Delta_o + 1P$ | **$-1.8\Delta_o + P$** |
+*   **$d^4$ Octahedral System:**
+    *   **High-Spin:** Electron configuration is $t_{2g}^3 e_g^1$.
+        *   *Calculation:* $[(-0.4 \times 3) + (0.6 \times 1)]\Delta_o$
+        *   *CFSE:* **$-0.6\Delta_o$**
+    *   **Low-Spin:** Electron configuration is $t_{2g}^4 e_g^0$.
+        *   *Calculation:* $[(-0.4 \times 4) + (0.6 \times 0)]\Delta_o + P$
+        *   *CFSE:* **$-1.6\Delta_o + P$** *(where $P$ is pairing energy)*
+*   **$d^7$ Octahedral System:**
+    *   **High-Spin:** Electron configuration is $t_{2g}^5 e_g^2$.
+        *   *Calculation:* $[(-0.4 \times 5) + (0.6 \times 2)]\Delta_o$
+        *   *CFSE:* **$-0.8\Delta_o$**
+    *   **Low-Spin:** Electron configuration is $t_{2g}^6 e_g^1$.
+        *   *Calculation:* $[(-0.4 \times 6) + (0.6 \times 1)]\Delta_o + P$
+        *   *CFSE:* **$-1.8\Delta_o + P$**
 *(Note: $P$ represents the pairing energy of the extra paired electron).*
 
 ---
@@ -394,23 +418,38 @@ In solids, atomic orbitals of countless atoms merge to form continuous "bands" o
 *   **Band Gap (Forbidden Zone):** The energy gap between the valence band and the conduction band where no electron states can exist.
 
 ### Material Types Classified by Band Gap
-| Material Type | Valence Band (VB) | Conduction Band (CB) | Band Gap ($E_g$) | Conductivity | At Absolute Zero (0 K) |
-| :--- | :--- | :--- | :---: | :--- | :--- |
-| **Conductors (Metals)** | Completely or partially filled | Overlaps with VB | **$E_g = 0$** | Exceptionally high | Remains conductive |
-| **Semiconductors** | Completely filled | Empty | **$E_g \approx 1\text{ eV}$** | Moderate (increases with temperature) | Acts as an insulator |
-| **Insulators** | Completely filled | Empty | **$E_g \gt 3\text{ eV}$** | Extremely low (none) | Acts as an insulator |
+*   **Conductors (Metals):**
+    *   *Valence/Conduction Band:* The Valence Band and Conduction Band overlap.
+    *   *Band Gap:* $E_g = 0$.
+    *   *Conductivity:* Exceptionally high (electrons move freely at all temperatures).
+    *   *At 0 K:* Remains highly conductive.
+*   **Semiconductors:**
+    *   *Valence/Conduction Band:* Valence Band is completely filled, Conduction Band is empty.
+    *   *Band Gap:* Small, $E_g \approx 1\text{ eV}$.
+    *   *Conductivity:* Moderate (increases with temperature as thermal energy excites electrons).
+    *   *At 0 K:* Behaves as a perfect insulator.
+*   **Insulators:**
+    *   *Valence/Conduction Band:* Valence Band is completely filled, Conduction Band is empty.
+    *   *Band Gap:* Large, $E_g \gt 3\text{ eV}$.
+    *   *Conductivity:* Extremely low (none under normal conditions).
+    *   *At 0 K:* Behaves as a perfect insulator.
 
 ## 2. Core Concepts: Doping
 Pure semiconductors (like Silicon or Germanium from Group 14) are called **intrinsic semiconductors** and have very low conductivity. To make them useful in electronics, we intentionally add impurities—a process called **doping**. This creates an **extrinsic semiconductor**.
 
 ### Extrinsic Semiconductors
-| Property | n-type Semiconductor (Negative) | p-type Semiconductor (Positive) |
-| :--- | :--- | :--- |
-| **Dopant Group** | Group 15 Pentavalent (e.g., Phosphorus, Arsenic) | Group 13 Trivalent (e.g., Boron, Aluminium, Gallium) |
-| **Valence Electrons** | 5 (one extra compared to host lattice) | 3 (one less compared to host lattice) |
-| **Majority Carrier** | **Free Electrons** | **Holes** (electron vacancies) |
-| **Induced Energy Level** | **Donor Level** just *below* Conduction Band | **Acceptor Level** just *above* Valence Band |
-| **Mechanism** | Electrons easily jump from donor level into Conduction Band | Electrons from VB easily jump into acceptor level holes |
+*   **n-type Semiconductor (Negative):**
+    *   *Dopant Group:* Group 15 Pentavalent impurities (e.g., Phosphorus, Arsenic).
+    *   *Valence Electrons:* 5 (one extra electron compared to the host Silicon lattice).
+    *   *Majority Carrier:* **Free Electrons**.
+    *   *Induced Energy Level:* **Donor Level** created just *below* the Conduction Band.
+    *   *Mechanism:* The extra electrons easily jump from the donor level into the Conduction Band to conduct current.
+*   **p-type Semiconductor (Positive):**
+    *   *Dopant Group:* Group 13 Trivalent impurities (e.g., Boron, Aluminium, Gallium).
+    *   *Valence Electrons:* 3 (one fewer electron compared to the host Silicon lattice).
+    *   *Majority Carrier:* **Holes** (electron vacancies).
+    *   *Induced Energy Level:* **Acceptor Level** created just *above* the Valence Band.
+    *   *Mechanism:* Electrons from the Valence Band easily jump into the acceptor level holes, leaving mobile holes in the Valence Band that conduct current.
 
 ### Previous Year Questions & Solutions (PYQs)
 
@@ -463,11 +502,9 @@ Electrons in the outermost shell of an atom do not feel the full positive charge
 ### Slater's Rules for $ns$ or $np$ Outer Valence Electrons
 Write the electron configuration and group them: $(1s) (2s, 2p) (3s, 3p) (3d) (4s, 4p)$, etc. Then compute the screening contribution for each electron group:
 
-| Shell Group | Contribution to Screening Constant ($S$) |
-| :--- | :---: |
-| **Same Group ($n$)** | **0.35** *(except 1s, which is 0.30)* |
-| **Inner Shell ($n-1$)** | **0.85** |
-| **Core Shells ($n-2$ or lower)** | **1.00** |
+*   **Electrons in the same group ($n$):** Each contributes **0.35** to the screening constant $S$ *(except $1s$ electrons, which contribute **0.30**)*.
+*   **Electrons in the inner shell ($n-1$):** Each contributes **0.85** to $S$.
+*   **Electrons in core shells ($n-2$ or lower):** Each contributes **1.00** to $S$.
 
 ## 2. Core Concepts: Molecular Geometry & VSEPR Theory
 Valence Shell Electron Pair Repulsion (VSEPR) theory states that electron pairs around a central atom will arrange themselves as far apart as possible to minimize repulsion.
@@ -518,13 +555,30 @@ $$Z_{eff} = 26 - 22.25 = \mathbf{3.75}$$
 
 **Solution:** Using VSEPR Theory:
 
-##### Molecular Geometry Table
-| Compound | Central Atom | Valence e⁻ Count | Bond Pairs | Lone Pairs | Hybridization | VSEPR Shape |
-| :--- | :---: | :---: | :---: | :---: | :---: | :--- |
-| **$\text{ClF}_3$** | Cl (7) | 10 (5 pairs) | 3 | 2 | $sp^3d$ | **T-shaped** (lone pairs equatorial) |
-| **$\text{XeF}_2$** | Xe (8) | 10 (5 pairs) | 2 | 3 | $sp^3d$ | **Linear** (lone pairs equatorial) |
-| **$\text{BrF}_5$** | Br (7) | 12 (6 pairs) | 5 | 1 | $sp^3d^2$ | **Square Pyramidal** |
-| **$\text{SCl}_6$** | S (6) | 12 (6 pairs) | 6 | 0 | $sp^3d^2$ | **Octahedral** |
+*   **$\text{ClF}_3$:**
+    *   *Central Atom:* Chlorine (Cl, 7 valence electrons).
+    *   *Valence Electrons:* 10 (5 electron pairs).
+    *   *Structure:* 3 bond pairs, 2 lone pairs.
+    *   *Hybridization:* $sp^3d$.
+    *   *VSEPR Shape:* **T-shaped** (with the 2 lone pairs occupying equatorial positions to minimize repulsion).
+*   **$\text{XeF}_2$:**
+    *   *Central Atom:* Xenon (Xe, 8 valence electrons).
+    *   *Valence Electrons:* 10 (5 electron pairs).
+    *   *Structure:* 2 bond pairs, 3 lone pairs.
+    *   *Hybridization:* $sp^3d$.
+    *   *VSEPR Shape:* **Linear** (with the 3 lone pairs occupying all equatorial positions).
+*   **$\text{BrF}_5$:**
+    *   *Central Atom:* Bromine (Br, 7 valence electrons).
+    *   *Valence Electrons:* 12 (6 electron pairs).
+    *   *Structure:* 5 bond pairs, 1 lone pair.
+    *   *Hybridization:* $sp^3d^2$.
+    *   *VSEPR Shape:* **Square Pyramidal**.
+*   **$\text{SCl}_6$:**
+    *   *Central Atom:* Sulfur (S, 6 valence electrons).
+    *   *Valence Electrons:* 12 (6 electron pairs).
+    *   *Structure:* 6 bond pairs, 0 lone pairs.
+    *   *Hybridization:* $sp^3d^2$.
+    *   *VSEPR Shape:* **Octahedral**.
 
 #### Q4. Arrange $\text{NH}_3, \text{H}_2\text{O}, \text{CH}_4$ according to increasing bond angle stating the reason. *(2024 SEM1 & 2025 SEM1, 2 Marks)*
 
@@ -532,12 +586,18 @@ $$Z_{eff} = 26 - 22.25 = \mathbf{3.75}$$
 
 **Order: $\text{H}_2\text{O} \lt \text{NH}_3 \lt \text{CH}_4$**
 
-##### Comparison of Bond Angles
-| Molecule | Hybridization | Lone Pairs | Ideal Angle | Actual Angle | VSEPR Repulsion Reasoning |
-| :--- | :---: | :---: | :---: | :---: | :--- |
-| **$\text{CH}_4$** | $sp^3$ | 0 | $109.5^\circ$ | **$109.5^\circ$** | Perfect tetrahedral symmetry; no lone pair repulsion. |
-| **$\text{NH}_3$** | $sp^3$ | 1 | $109.5^\circ$ | **$\sim 107^\circ$** | One lone pair pushes bond pairs closer (LP-BP repulsion). |
-| **$\text{H}_2\text{O}$** | $sp^3$ | 2 | $109.5^\circ$ | **$\sim 104.5^\circ$** | Two lone pairs push bond pairs even closer (LP-LP > LP-BP repulsion). |
+*   **$\text{CH}_4$:**
+    *   *Hybridization:* $sp^3$ (0 lone pairs).
+    *   *Ideal vs. Actual Angle:* $109.5^\circ$ vs. **$109.5^\circ$**.
+    *   *VSEPR Reasoning:* Symmetrical tetrahedral arrangement with zero lone pairs; all repulsions are equal.
+*   **$\text{NH}_3$:**
+    *   *Hybridization:* $sp^3$ (1 lone pair).
+    *   *Ideal vs. Actual Angle:* $109.5^\circ$ vs. **$\sim 107^\circ$**.
+    *   *VSEPR Reasoning:* The single lone pair occupies more space, pushing the N-H bond pairs closer together (LP-BP repulsion).
+*   **$\text{H}_2\text{O}$:**
+    *   *Hybridization:* $sp^3$ (2 lone pairs).
+    *   *Ideal vs. Actual Angle:* $109.5^\circ$ vs. **$\sim 104.5^\circ$**.
+    *   *VSEPR Reasoning:* Two lone pairs exert stronger repulsion than one, forcing the O-H bonds even closer together (LP-LP $\gt$ LP-BP $\gt$ BP-BP repulsion).
 
 #### Q5. Dipole moment of $\text{BF}_3$ is zero while that of $\text{NF}_3$ is 0.24D. Justify. *(2024 SEM1 & 2025 SEM1, 2 Marks)*
 

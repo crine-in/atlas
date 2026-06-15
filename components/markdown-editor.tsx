@@ -22,6 +22,7 @@ import {
   Printer,
   FileText,
   FileCode,
+  FileImage,
   Link,
   Table,
   Check,
@@ -254,6 +255,25 @@ export default function MarkdownEditor() {
   };
 
   // 6. Export Feature Methods
+  const handlePrintPDF = () => {
+    if (!activeFile) return;
+    setExportOpen(false);
+    
+    // Temporarily disable dark mode for printing if active
+    const wasDark = document.documentElement.classList.contains("dark");
+    if (wasDark) {
+      document.documentElement.classList.remove("dark");
+    }
+
+    // Trigger standard browser print window
+    window.print();
+
+    // Re-enable dark mode if it was active
+    if (wasDark) {
+      document.documentElement.classList.add("dark");
+    }
+  };
+
   const handleExportPDF = async () => {
     if (!activeFile || !previewRef.current) return;
     setExportOpen(false);
@@ -355,7 +375,7 @@ export default function MarkdownEditor() {
   }
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden bg-background text-foreground font-sans select-none">
+    <div className="flex h-screen w-screen overflow-hidden bg-background text-foreground font-sans select-none print-full-width">
       
       {/* 1. Collapsible Document Sidebar */}
       {showSidebar && (
@@ -372,7 +392,7 @@ export default function MarkdownEditor() {
       )}
 
       {/* 2. Main Work Area Container */}
-      <div className="flex flex-1 flex-col overflow-hidden min-w-0">
+      <div className="flex flex-1 flex-col overflow-hidden min-w-0 print-full-width">
         
         {/* Workspace Toolbar/Header */}
         <header className="flex items-center justify-between border-b border-border bg-card/50 px-4 py-2.5 no-print shrink-0">
@@ -476,11 +496,20 @@ export default function MarkdownEditor() {
                   <div className="fixed inset-0 z-30" onClick={() => setExportOpen(false)}></div>
                   <div className="absolute right-0 mt-1.5 w-48 rounded-md border border-border bg-popover text-popover-foreground shadow-lg z-40 p-1 font-sans animate-in fade-in slide-in-from-top-1 duration-150">
                     <button
-                      onClick={handleExportPDF}
+                      onClick={handlePrintPDF}
                       className="flex w-full items-center gap-2 rounded px-2.5 py-1.5 text-xs hover:bg-accent hover:text-accent-foreground text-left cursor-pointer"
+                      title="Prints a searchable, selectable, vector-text PDF"
                     >
                       <Printer size={13} />
-                      Export to PDF
+                      Print / Save PDF (Vector)
+                    </button>
+                    <button
+                      onClick={handleExportPDF}
+                      className="flex w-full items-center gap-2 rounded px-2.5 py-1.5 text-xs hover:bg-accent hover:text-accent-foreground text-left cursor-pointer text-muted-foreground"
+                      title="Alternative high-fidelity rasterized PDF layout"
+                    >
+                      <FileImage size={13} />
+                      Export PDF (Image Layout)
                     </button>
                     <button
                       onClick={handleExportDOCX}
@@ -523,7 +552,7 @@ export default function MarkdownEditor() {
 
         {/* Dynamic Panels */}
         {activeFile ? (
-          <div ref={containerRef} className="flex-1 flex overflow-hidden min-w-0">
+          <div ref={containerRef} className="flex-1 flex overflow-hidden min-w-0 print-full-width">
             {/* Left/Main workspace (Editor + Preview split) */}
             <div className="flex-1 flex overflow-hidden min-w-0 print-full-width">
               {/* Editor panel */}

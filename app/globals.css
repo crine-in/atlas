@@ -361,6 +361,13 @@
   .mermaid-wrapper {
     page-break-inside: avoid;
   }
+  .prose-atlas hr {
+    page-break-before: always !important;
+    border: none !important;
+    margin: 0 !important;
+    height: 0 !important;
+    visibility: hidden !important;
+  }
   @page {
     margin: 2cm;
   }
