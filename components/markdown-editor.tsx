@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useTheme } from "next-themes";
 import { DocFile, DEFAULT_DOCS } from "@/lib/default-docs";
 import { exportToDocx } from "@/lib/docx-export";
-import { exportToPdf } from "@/lib/pdf-export";
+import { exportToPdf, createCoverPageElement } from "@/lib/pdf-export";
 import DocumentSidebar from "./document-sidebar";
 import EditorPane from "./editor-pane";
 import PreviewPane from "./preview-pane";
@@ -29,7 +29,8 @@ import {
   RefreshCw,
   Eye,
   Columns,
-  Maximize2
+  Maximize2,
+  X
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -50,6 +51,20 @@ export default function MarkdownEditor() {
   const [scrollSync, setScrollSync] = useState(true);
   const [isPresentationMode, setIsPresentationMode] = useState(false);
   const [exportOpen, setExportOpen] = useState(false);
+  const [pdfSettingsOpen, setPdfSettingsOpen] = useState(false);
+  const [pdfSettings, setPdfSettings] = useState({
+    watermarkText: "",
+    watermarkOpacity: 15,
+    watermarkColor: "#6b7280",
+    showPageNumbers: true,
+    coverEnabled: false,
+    coverTemplate: "minimal" as "minimal" | "modern" | "editorial" | "academic",
+    coverTitle: "",
+    coverSubtitle: "",
+    coverAuthor: "",
+    coverDate: new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }),
+    coverAccentColor: "#3b82f6"
+  });
 
   // Resize State
   const [editorWidth, setEditorWidth] = useState(50); // percentage
@@ -88,6 +103,39 @@ export default function MarkdownEditor() {
       setActiveFileId(loadedFiles[0].id);
     }
   }, []);
+
+  // Load PDF settings on mount
+  useEffect(() => {
+    const savedPdfSettings = localStorage.getItem("atlas-pdf-export-settings");
+    if (savedPdfSettings) {
+      try {
+        const parsed = JSON.parse(savedPdfSettings);
+        setPdfSettings((prev) => ({ ...prev, ...parsed }));
+      } catch (e) {
+        console.error("Failed to parse pdf export settings:", e);
+      }
+    }
+  }, []);
+
+  // Update coverTitle when active file changes if coverTitle is empty
+  useEffect(() => {
+    if (activeFile) {
+      setPdfSettings((prev) => {
+        if (!prev.coverTitle || prev.coverTitle === "") {
+          return { ...prev, coverTitle: activeFile.name.replace(/\.md$/, "") };
+        }
+        return prev;
+      });
+    }
+  }, [activeFileId]);
+
+  const updateSetting = (key: string, value: any) => {
+    setPdfSettings((prev) => {
+      const updated = { ...prev, [key]: value };
+      localStorage.setItem("atlas-pdf-export-settings", JSON.stringify(updated));
+      return updated;
+    });
+  };
 
   // Get active file
   const activeFile = files.find((f) => f.id === activeFileId);
@@ -257,6 +305,7 @@ export default function MarkdownEditor() {
   // 6. Export Feature Methods
   const handlePrintPDF = () => {
     if (!activeFile) return;
+    setPdfSettingsOpen(false);
     setExportOpen(false);
     
     // Temporarily disable dark mode for printing if active
@@ -265,6 +314,73 @@ export default function MarkdownEditor() {
       document.documentElement.classList.remove("dark");
     }
 
+    // Dynamic styling/elements for printing
+    let coverEl: HTMLDivElement | null = null;
+    let styleEl: HTMLStyleElement | null = null;
+    let watermarkEl: HTMLDivElement | null = null;
+
+    if (pdfSettings.coverEnabled) {
+      // Create cover page element and prepend to preview pane
+      coverEl = createCoverPageElement({
+        enabled: true,
+        template: pdfSettings.coverTemplate,
+        title: pdfSettings.coverTitle || activeFile.name.replace(/\.md$/, ""),
+        subtitle: pdfSettings.coverSubtitle,
+        author: pdfSettings.coverAuthor,
+        date: pdfSettings.coverDate,
+        accentColor: pdfSettings.coverAccentColor
+      }, 1008) as HTMLDivElement;
+      
+      coverEl.classList.add("print-only-cover");
+      Object.assign(coverEl.style, {
+        pageBreakAfter: "always",
+        breakAfter: "page"
+      });
+
+      const previewContainer = previewRef.current?.querySelector(".prose-atlas");
+      if (previewContainer) {
+        previewContainer.insertBefore(coverEl, previewContainer.firstChild);
+      }
+    }
+
+    // Watermark block for print
+    if (pdfSettings.watermarkText) {
+      watermarkEl = document.createElement("div");
+      watermarkEl.innerText = pdfSettings.watermarkText;
+      watermarkEl.className = "print-watermark";
+      document.body.appendChild(watermarkEl);
+    }
+
+    // Dynamic style block for print page breaks, watermarks, etc.
+    styleEl = document.createElement("style");
+    styleEl.innerHTML = `
+      @media print {
+        .print-only-cover {
+          display: flex !important;
+          width: 100% !important;
+          height: 100vh !important;
+          page-break-after: always !important;
+          break-after: page !important;
+        }
+        .print-watermark {
+          position: fixed !important;
+          top: 50% !important;
+          left: 50% !important;
+          transform: translate(-50%, -50%) rotate(-45deg) !important;
+          font-size: 80pt !important;
+          color: ${pdfSettings.watermarkColor} !important;
+          opacity: ${(pdfSettings.watermarkOpacity / 100) * 0.5} !important;
+          mix-blend-mode: multiply !important;
+          pointer-events: none !important;
+          z-index: 99999 !important;
+          white-space: nowrap !important;
+          font-weight: bold !important;
+          display: block !important;
+        }
+      }
+    `;
+    document.head.appendChild(styleEl);
+
     // Trigger standard browser print window
     window.print();
 
@@ -272,13 +388,44 @@ export default function MarkdownEditor() {
     if (wasDark) {
       document.documentElement.classList.add("dark");
     }
+
+    // Cleanup print elements
+    if (coverEl) {
+      coverEl.remove();
+    }
+    if (watermarkEl) {
+      watermarkEl.remove();
+    }
+    if (styleEl) {
+      styleEl.remove();
+    }
   };
 
-  const handleExportPDF = async () => {
-    if (!activeFile || !previewRef.current) return;
+  const handleExportPDF = () => {
+    if (!activeFile) return;
     setExportOpen(false);
+    setPdfSettingsOpen(true);
+  };
+
+  const triggerExportWithSettings = async () => {
+    if (!activeFile || !previewRef.current) return;
+    setPdfSettingsOpen(false);
     try {
-      await exportToPdf(previewRef.current, activeFile.name);
+      await exportToPdf(previewRef.current, activeFile.name, {
+        watermarkText: pdfSettings.watermarkText,
+        watermarkOpacity: pdfSettings.watermarkOpacity / 100,
+        watermarkColor: pdfSettings.watermarkColor,
+        showPageNumbers: pdfSettings.showPageNumbers,
+        coverPage: {
+          enabled: pdfSettings.coverEnabled,
+          template: pdfSettings.coverTemplate,
+          title: pdfSettings.coverTitle || activeFile.name.replace(/\.md$/, ""),
+          subtitle: pdfSettings.coverSubtitle,
+          author: pdfSettings.coverAuthor,
+          date: pdfSettings.coverDate,
+          accentColor: pdfSettings.coverAccentColor
+        }
+      });
     } catch (err) {
       console.error("Failed to export to PDF:", err);
       alert("Error exporting to PDF. Check console logs.");
@@ -614,6 +761,232 @@ export default function MarkdownEditor() {
           </div>
         )}
       </div>
+
+      {/* PDF Export Settings Modal */}
+      {pdfSettingsOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4 font-sans text-foreground">
+          <div className="relative w-full max-w-2xl rounded-xl border border-border bg-card shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-in fade-in zoom-in-95 duration-200">
+            {/* Header */}
+            <div className="flex items-center justify-between border-b border-border px-6 py-4">
+              <div>
+                <h3 className="text-lg font-bold">PDF Export Configuration</h3>
+                <p className="text-xs text-muted-foreground mt-0.5">Customize cover pages, watermarks, and page numbers.</p>
+              </div>
+              <button 
+                onClick={() => setPdfSettingsOpen(false)}
+                className="rounded-full p-1.5 hover:bg-muted text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            {/* Scrollable Content */}
+            <div className="flex-1 overflow-y-auto p-6 space-y-6">
+              {/* Cover Page settings */}
+              <div className="space-y-4">
+                <div className="flex items-center justify-between border-b border-border/50 pb-2">
+                  <span className="font-semibold text-sm">1. Cover Page Format</span>
+                  <label className="relative inline-flex items-center cursor-pointer select-none">
+                    <input 
+                      type="checkbox" 
+                      checked={pdfSettings.coverEnabled}
+                      onChange={(e) => updateSetting("coverEnabled", e.target.checked)}
+                      className="sr-only peer"
+                    />
+                    <div className="w-9 h-5 bg-muted rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+                    <span className="ml-2 text-xs font-semibold">{pdfSettings.coverEnabled ? "Enabled" : "Disabled"}</span>
+                  </label>
+                </div>
+
+                {pdfSettings.coverEnabled && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 animate-in slide-in-from-top-2 duration-200">
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-semibold text-muted-foreground">Template Style</label>
+                      <select
+                        value={pdfSettings.coverTemplate}
+                        onChange={(e) => updateSetting("coverTemplate", e.target.value)}
+                        className="w-full rounded-md border border-border bg-background px-3 py-1.5 text-xs focus:outline-none focus:ring-1 focus:ring-primary"
+                      >
+                        <option value="minimal">Minimalist / Clean</option>
+                        <option value="modern">Modern Accent Stripe</option>
+                        <option value="editorial">Elegant Editorial</option>
+                        <option value="academic">Academic / Technical</option>
+                      </select>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-semibold text-muted-foreground">Accent Color</label>
+                      <div className="flex gap-2 items-center">
+                        <input
+                          type="color"
+                          value={pdfSettings.coverAccentColor}
+                          onChange={(e) => updateSetting("coverAccentColor", e.target.value)}
+                          className="w-8 h-8 rounded border border-border bg-transparent cursor-pointer p-0 shrink-0"
+                        />
+                        <input
+                          type="text"
+                          value={pdfSettings.coverAccentColor}
+                          onChange={(e) => updateSetting("coverAccentColor", e.target.value)}
+                          className="w-full rounded-md border border-border bg-background px-3 py-1.5 text-xs font-mono focus:outline-none focus:ring-1 focus:ring-primary"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-1.5 md:col-span-2">
+                      <label className="text-xs font-semibold text-muted-foreground">Cover Title</label>
+                      <input
+                        type="text"
+                        value={pdfSettings.coverTitle}
+                        onChange={(e) => updateSetting("coverTitle", e.target.value)}
+                        placeholder="Document Title"
+                        className="w-full rounded-md border border-border bg-background px-3 py-1.5 text-xs focus:outline-none focus:ring-1 focus:ring-primary"
+                      />
+                    </div>
+
+                    <div className="space-y-1.5 md:col-span-2">
+                      <label className="text-xs font-semibold text-muted-foreground">Subtitle</label>
+                      <input
+                        type="text"
+                        value={pdfSettings.coverSubtitle}
+                        onChange={(e) => updateSetting("coverSubtitle", e.target.value)}
+                        placeholder="e.g. Project Summary & Findings"
+                        className="w-full rounded-md border border-border bg-background px-3 py-1.5 text-xs focus:outline-none focus:ring-1 focus:ring-primary"
+                      />
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-semibold text-muted-foreground">Author / Prep By</label>
+                      <input
+                        type="text"
+                        value={pdfSettings.coverAuthor}
+                        onChange={(e) => updateSetting("coverAuthor", e.target.value)}
+                        placeholder="Author Name"
+                        className="w-full rounded-md border border-border bg-background px-3 py-1.5 text-xs focus:outline-none focus:ring-1 focus:ring-primary"
+                      />
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-semibold text-muted-foreground">Date</label>
+                      <input
+                        type="text"
+                        value={pdfSettings.coverDate}
+                        onChange={(e) => updateSetting("coverDate", e.target.value)}
+                        placeholder="e.g. October 2026"
+                        className="w-full rounded-md border border-border bg-background px-3 py-1.5 text-xs focus:outline-none focus:ring-1 focus:ring-primary"
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Watermark settings */}
+              <div className="space-y-4 pt-4 border-t border-border/50">
+                <div className="flex items-center justify-between border-b border-border/50 pb-2">
+                  <span className="font-semibold text-sm">2. Blended Text Watermark</span>
+                  <div className="text-xs text-muted-foreground italic">Appears diagonally behind page content</div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="space-y-1.5 md:col-span-2">
+                    <label className="text-xs font-semibold text-muted-foreground">Watermark Text</label>
+                    <input
+                      type="text"
+                      value={pdfSettings.watermarkText}
+                      onChange={(e) => updateSetting("watermarkText", e.target.value)}
+                      placeholder="e.g. CONFIDENTIAL, DRAFT, INTERNAL USE"
+                      className="w-full rounded-md border border-border bg-background px-3 py-1.5 text-xs focus:outline-none focus:ring-1 focus:ring-primary"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-semibold text-muted-foreground">Text Color</label>
+                    <div className="flex gap-2 items-center">
+                      <input
+                        type="color"
+                        value={pdfSettings.watermarkColor}
+                        onChange={(e) => updateSetting("watermarkColor", e.target.value)}
+                        className="w-8 h-8 rounded border border-border bg-transparent cursor-pointer p-0 shrink-0"
+                      />
+                      <input
+                        type="text"
+                        value={pdfSettings.watermarkColor}
+                        onChange={(e) => updateSetting("watermarkColor", e.target.value)}
+                        className="w-full rounded-md border border-border bg-background px-3 py-1.5 text-xs font-mono focus:outline-none focus:ring-1 focus:ring-primary"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5 md:col-span-3">
+                    <div className="flex justify-between items-center text-xs font-semibold text-muted-foreground">
+                      <span>Opacity / Transparency</span>
+                      <span>{pdfSettings.watermarkOpacity}%</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="5"
+                      max="60"
+                      step="5"
+                      value={pdfSettings.watermarkOpacity}
+                      onChange={(e) => updateSetting("watermarkOpacity", parseInt(e.target.value))}
+                      className="w-full accent-primary bg-muted rounded-lg appearance-none cursor-pointer h-1.5 mt-2"
+                    />
+                    <div className="flex justify-between text-[10px] text-muted-foreground px-1">
+                      <span>Very Faint (5%)</span>
+                      <span>Strong (60%)</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Layout Settings (Page Numbers) */}
+              <div className="space-y-4 pt-4 border-t border-border/50">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <span className="font-semibold text-sm">3. Page Numbering</span>
+                    <p className="text-xs text-muted-foreground mt-0.5">Adds a centered "Page X of Y" footer on each page (excluding cover page).</p>
+                  </div>
+                  <label className="relative inline-flex items-center cursor-pointer select-none">
+                    <input 
+                      type="checkbox" 
+                      checked={pdfSettings.showPageNumbers}
+                      onChange={(e) => updateSetting("showPageNumbers", e.target.checked)}
+                      className="sr-only peer"
+                    />
+                    <div className="w-9 h-5 bg-muted rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+                    <span className="ml-2 text-xs font-semibold">{pdfSettings.showPageNumbers ? "ON" : "OFF"}</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            {/* Footer Buttons */}
+            <div className="flex items-center justify-between border-t border-border px-6 py-4 bg-muted/20">
+              <span className="text-xs text-muted-foreground">Settings are saved automatically.</span>
+              <div className="flex gap-2">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={handlePrintPDF}
+                  className="font-semibold"
+                  title="Print selectable vector text layout via browser print"
+                >
+                  Print (Vector)
+                </Button>
+                <Button 
+                  variant="default" 
+                  size="sm"
+                  onClick={triggerExportWithSettings}
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold flex items-center gap-1.5"
+                  title="Generate high-fidelity pixel-perfect rasterized layout"
+                >
+                  <FileText size={14} />
+                  Export (Image)
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
